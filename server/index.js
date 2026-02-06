@@ -36,11 +36,10 @@ const pagesPath = path.join(clientPath, "pages");
 // Serve static assets (css, js, images, etc.)
 app.use("/assets", express.static(assetsPath));
 app.use(express.static(path.join(clientPath, "public")));
+app.use(express.static(clientPath)); // Serve root level static files
 
 // Route handlers for main pages
-app.get("/", (req, res) =>
-  res.sendFile(path.join(pagesPath, "index.html")),
-);
+app.get("/", (req, res) => res.sendFile(path.join(clientPath, "index.html")));
 app.get("/login", (req, res) =>
   res.sendFile(path.join(pagesPath, "login.html")),
 );
@@ -63,9 +62,9 @@ app.get("/:page", (req, res, next) => {
   return next();
 });
 
-// SPA fallback: serve pages/index.html for unknown routes
+// SPA fallback: serve client/index.html for unknown routes
 app.use((req, res) => {
-  res.sendFile(path.join(pagesPath, "index.html"));
+  res.sendFile(path.join(clientPath, "index.html"));
 });
 
 app.listen(port, () => {
