@@ -1,6 +1,13 @@
 import { getToken } from "./auth.js";
+import { getBackendUrl } from "./config.js";
 
-const tasksBase = "/api/tasks";
+let tasksBase = "";
+
+// Initialize backend URL
+(async () => {
+  tasksBase = (await getBackendUrl()) + "/api/tasks";
+})();
+
 let currentEditTask = null;
 
 function ensureToastContainer() {
@@ -97,13 +104,12 @@ ensureToastContainer();
 // If user is not logged in, prevent accessing dashboard/tasks pages
 try {
   if (!getToken()) {
-    
     showToast("Please login to continue", "error");
     setTimeout(() => (window.location.href = "/login"), 700);
   }
 } catch (err) {
   // ignore
-  console.log(err)
+  console.log(err);
 }
 
 async function loadTasks() {
@@ -243,5 +249,14 @@ if (logoutBtn)
     window.appAuth?.logout();
   });
 
-// initial load
-loadTasks();
+// initial load - wait for tasksBase to initialize
+(async () => {
+  // Wait for tasksBase to be set (max 2 seconds)
+  const maxAttempts = 20;
+  let attempts = 0;
+  while (!tasksBase && attempts < maxAttempts) {
+    await new Promise((r) => setTimeout(r, 100));
+    attempts++;
+  }
+  loadTasks();
+})();

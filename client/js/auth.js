@@ -1,5 +1,12 @@
 // handles login/register and storing token
-const apiBase = "/api/auth";
+import { getBackendUrl } from "./config.js";
+
+let apiBase = "";
+
+// Initialize backend URL
+(async () => {
+  apiBase = (await getBackendUrl()) + "/api/auth";
+})();
 
 // toast helper
 function ensureToastContainer() {

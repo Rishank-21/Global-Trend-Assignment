@@ -21,14 +21,18 @@ app.use(cookieParser());
 app.use("/api/auth", authRoutes);
 app.use("/api/tasks", taskRoutes);
 
-// Serve frontend static files
-// Serve static client located one level above `server` folder
+// Config endpoint - expose backend URL to frontend
+app.get("/api/config", (req, res) => {
+  res.json({
+    backendUrl: process.env.BACKEND_URL || `http://localhost:${port}`
+  });
+});
+
+
 const clientPath = path.resolve(process.cwd(), "..", "client");
 app.use(express.static(clientPath));
 
-// SPA fallback: serve client/index.html for unknown routes
-// If a direct `/<name>` route matches an HTML file (e.g. /login -> login.html), serve it.
-// Explicit routes for main pages
+
 app.get("/login", (req, res) =>
   res.sendFile(path.join(clientPath, "login.html")),
 );
@@ -39,7 +43,7 @@ app.get("/dashboard.html", (req, res) =>
   res.sendFile(path.join(clientPath, "dashboard.html")),
 );
 
-// Generic handler for `/<name>` to serve a matching HTML file if present
+
 app.get("/:page", (req, res, next) => {
   const page = req.params.page;
   if (!page || page.includes(".")) return next();
@@ -48,7 +52,7 @@ app.get("/:page", (req, res, next) => {
   return next();
 });
 
-// SPA fallback: serve client/index.html for unknown routes
+
 app.use((req, res) => {
   res.sendFile(path.join(clientPath, "index.html"));
 });
