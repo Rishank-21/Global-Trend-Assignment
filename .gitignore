@@ -1,0 +1,9 @@
+node_modules/
+server/node_modules/
+.env
+.DS_Store
+dist/
+coverage/
+*.log
+/.vscode/
+client/*.zip

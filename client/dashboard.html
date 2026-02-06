@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dashboard - Task Manager</title>
+    <link rel="stylesheet" href="css/app.css" />
+  </head>
+  <body>
+    <header>
+      <h2>📋 Task Manager</h2>
+      <button id="logoutBtn">Logout</button>
+    </header>
+    
+    <main>
+      <section>
+        <p class="section-title">Create a New Task</p>
+        <form id="taskForm" class="form-group">
+          <div class="form-row">
+            <input
+              id="title"
+              type="text"
+              placeholder="Task title (e.g., Design homepage)"
+              required
+              autocomplete="off"
+            />
+            <input
+              id="description"
+              type="text"
+              placeholder="Description (e.g., Create mockup and prototype)"
+              required
+              autocomplete="off"
+            />
+            <button type="submit">+ Add Task</button>
+          </div>
+        </form>
+
+        <p class="section-title">Your Tasks</p>
+        <ul id="tasksList">
+          <!-- Tasks will be dynamically inserted here -->
+        </ul>
+      </section>
+    </main>
+
+    <!-- Edit Task Modal -->
+    <div id="editModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Edit Task</h2>
+          <button id="closeEditModal" type="button" class="close-btn" aria-label="Close modal">
+            &times;
+          </button>
+        </div>
+        <form id="editModalForm" class="modal-form">
+          <div class="form-group-vertical">
+            <label for="editTitle">Task Title</label>
+            <input
+              id="editTitle"
+              type="text"
+              placeholder="Enter task title"
+              required
+              autocomplete="off"
+            />
+          </div>
+          <div class="form-group-vertical">
+            <label for="editDescription">Description</label>
+            <input
+              id="editDescription"
+              type="text"
+              placeholder="Enter task description"
+              required
+              autocomplete="off"
+            />
+          </div>
+          <div class="form-group-vertical">
+            <label for="editStatus">Status</label>
+            <select id="editStatus" required>
+              <option value="pending">Pending</option>
+              <option value="in progress">In Progress</option>
+              <option value="completed">Completed</option>
+            </select>
+          </div>
+          <div class="modal-actions">
+            <button type="submit" class="btn-primary">Save Changes</button>
+            <button type="button" id="cancelEditModal" class="btn-secondary">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="js/tasks.js" type="module"></script>
+  </body>
+</html>
