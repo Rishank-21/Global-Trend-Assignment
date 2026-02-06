@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Login - Task Manager</title>
+    <link rel="stylesheet" href="../assets/css/app.css" />
+    <link rel="stylesheet" href="../assets/css/login.css" />
+  </head>
+  <body>
+    <div class="login-container">
+      <div class="login-box">
+        <div class="login-header">
+          <h1>📋 Task Manager</h1>
+          <p>Welcome Back</p>
+        </div>
+
+        <form id="loginForm" class="login-form">
+          <div class="form-group-vertical">
+            <label for="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              placeholder="Enter your email"
+              required
+              autocomplete="email"
+            />
+          </div>
+
+          <div class="form-group-vertical">
+            <label for="password">Password</label>
+            <input
+              id="password"
+              type="password"
+              placeholder="Enter your password"
+              required
+              autocomplete="current-password"
+            />
+          </div>
+
+          <button type="submit" class="btn-primary login-btn">Login</button>
+        </form>
+
+        <div class="login-footer">
+          <p>Don't have an account? <a href="/register">Register here</a></p>
+        </div>
+      </div>
+    </div>
+
+    <script type="module">
+      import { initLoginPage } from "../assets/js/pages/login.js";
+      import {
+        showToast,
+        ensureToastContainer,
+      } from "../assets/js/utils/toast.js";
+      import { getToken, logout } from "../assets/js/services/authService.js";
+      import { isAuthPage } from "../assets/js/utils/helpers.js";
+
+      ensureToastContainer();
+
+      // If user is already logged in, redirect to dashboard
+      try {
+        if (isAuthPage() && getToken()) {
+          showToast("Already logged in", "info");
+          setTimeout(() => (window.location.href = "/dashboard.html"), 700);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+
+      // Initialize login page
+      initLoginPage();
+
+      // Expose logout globally for other scripts
+      window.appAuth = { logout, showToast };
+    </script>
+  </body>
+</html>

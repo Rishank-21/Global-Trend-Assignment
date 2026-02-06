@@ -28,33 +28,44 @@ app.get("/api/config", (req, res) => {
   });
 });
 
-
+// Serve frontend static assets
 const clientPath = path.resolve(process.cwd(), "..", "client");
-app.use(express.static(clientPath));
+const assetsPath = path.join(clientPath, "assets");
+const pagesPath = path.join(clientPath, "pages");
 
+// Serve static assets (css, js, images, etc.)
+app.use("/assets", express.static(assetsPath));
+app.use(express.static(path.join(clientPath, "public")));
 
+// Route handlers for main pages
+app.get("/", (req, res) =>
+  res.sendFile(path.join(pagesPath, "index.html")),
+);
 app.get("/login", (req, res) =>
-  res.sendFile(path.join(clientPath, "login.html")),
+  res.sendFile(path.join(pagesPath, "login.html")),
 );
 app.get("/register", (req, res) =>
-  res.sendFile(path.join(clientPath, "register.html")),
+  res.sendFile(path.join(pagesPath, "register.html")),
+);
+app.get("/dashboard", (req, res) =>
+  res.sendFile(path.join(pagesPath, "dashboard.html")),
 );
 app.get("/dashboard.html", (req, res) =>
-  res.sendFile(path.join(clientPath, "dashboard.html")),
+  res.sendFile(path.join(pagesPath, "dashboard.html")),
 );
 
-
+// Generic handler for `/<page>` to serve a matching HTML file if present
 app.get("/:page", (req, res, next) => {
   const page = req.params.page;
   if (!page || page.includes(".")) return next();
-  const file = path.join(clientPath, `${page}.html`);
+  const file = path.join(pagesPath, `${page}.html`);
   if (fs.existsSync(file)) return res.sendFile(file);
   return next();
 });
 
-
+// SPA fallback: serve pages/index.html for unknown routes
 app.use((req, res) => {
-  res.sendFile(path.join(clientPath, "index.html"));
+  res.sendFile(path.join(pagesPath, "index.html"));
 });
 
 app.listen(port, () => {

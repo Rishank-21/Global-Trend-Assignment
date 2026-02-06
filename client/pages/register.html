@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Register - Task Manager</title>
+    <link rel="stylesheet" href="../assets/css/app.css" />
+    <link rel="stylesheet" href="../assets/css/register.css" />
+  </head>
+  <body>
+    <div class="register-container">
+      <div class="register-box">
+        <div class="register-header">
+          <h1>📋 Task Manager</h1>
+          <p>Create Your Account</p>
+        </div>
+
+        <form id="registerForm" class="register-form">
+          <div class="form-group-vertical">
+            <label for="username">Full Name</label>
+            <input
+              id="username"
+              type="text"
+              placeholder="Enter your full name"
+              required
+              autocomplete="name"
+            />
+          </div>
+
+          <div class="form-group-vertical">
+            <label for="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              placeholder="Enter your email"
+              required
+              autocomplete="email"
+            />
+          </div>
+
+          <div class="form-group-vertical">
+            <label for="password">Password</label>
+            <input
+              id="password"
+              type="password"
+              placeholder="Enter a strong password (min 6 characters)"
+              required
+              autocomplete="new-password"
+            />
+          </div>
+
+          <button type="submit" class="btn-primary register-btn">
+            Create Account
+          </button>
+        </form>
+
+        <div class="register-footer">
+          <p>Already have an account? <a href="/login">Login here</a></p>
+        </div>
+      </div>
+    </div>
+
+    <script type="module">
+      import { initRegisterPage } from "../assets/js/pages/register.js";
+      import {
+        showToast,
+        ensureToastContainer,
+      } from "../assets/js/utils/toast.js";
+      import { getToken, logout } from "../assets/js/services/authService.js";
+      import { isAuthPage } from "../assets/js/utils/helpers.js";
+
+      ensureToastContainer();
+
+      // If user is already logged in, redirect to dashboard
+      try {
+        if (isAuthPage() && getToken()) {
+          showToast("Already logged in", "info");
+          setTimeout(() => (window.location.href = "/dashboard.html"), 700);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+
+      // Initialize register page
+      initRegisterPage();
+
+      // Expose logout globally for other scripts
+      window.appAuth = { logout, showToast };
+    </script>
+  </body>
+</html>
