@@ -3,19 +3,30 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Login - Task Manager</title>
-    <link rel="stylesheet" href="../assets/css/app.css" />
-    <link rel="stylesheet" href="../assets/css/login.css" />
+    <title>Register - Task Manager</title>
+    <link rel="stylesheet" href="assets/css/app.css" />
+    <link rel="stylesheet" href="assets/css/register.css" />
   </head>
   <body>
-    <div class="login-container">
-      <div class="login-box">
-        <div class="login-header">
+    <div class="register-container">
+      <div class="register-box">
+        <div class="register-header">
           <h1>📋 Task Manager</h1>
-          <p>Welcome Back</p>
+          <p>Create Your Account</p>
         </div>
 
-        <form id="loginForm" class="login-form">
+        <form id="registerForm" class="register-form">
+          <div class="form-group-vertical">
+            <label for="username">Full Name</label>
+            <input
+              id="username"
+              type="text"
+              placeholder="Enter your full name"
+              required
+              autocomplete="name"
+            />
+          </div>
+
           <div class="form-group-vertical">
             <label for="email">Email</label>
             <input
@@ -32,29 +43,31 @@
             <input
               id="password"
               type="password"
-              placeholder="Enter your password"
+              placeholder="Enter a strong password (min 6 characters)"
               required
-              autocomplete="current-password"
+              autocomplete="new-password"
             />
           </div>
 
-          <button type="submit" class="btn-primary login-btn">Login</button>
+          <button type="submit" class="btn-primary register-btn">
+            Create Account
+          </button>
         </form>
 
-        <div class="login-footer">
-          <p>Don't have an account? <a href="/register">Register here</a></p>
+        <div class="register-footer">
+          <p>Already have an account? <a href="/login.html">Login here</a></p>
         </div>
       </div>
     </div>
 
     <script type="module">
-      import { initLoginPage } from "../assets/js/pages/login.js";
+      import { initRegisterPage } from "./assets/js/pages/register.js";
       import {
         showToast,
         ensureToastContainer,
-      } from "../assets/js/utils/toast.js";
-      import { getToken, logout } from "../assets/js/services/authService.js";
-      import { isAuthPage } from "../assets/js/utils/helpers.js";
+      } from "./assets/js/utils/toast.js";
+      import { getToken, logout } from "./assets/js/services/authService.js";
+      import { isAuthPage } from "./assets/js/utils/helpers.js";
 
       ensureToastContainer();
 
@@ -68,8 +81,8 @@
         console.log(err);
       }
 
-      // Initialize login page
-      initLoginPage();
+      // Initialize register page
+      initRegisterPage();
 
       // Expose logout globally for other scripts
       window.appAuth = { logout, showToast };

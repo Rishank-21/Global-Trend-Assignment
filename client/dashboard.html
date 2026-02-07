@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Dashboard - Task Manager</title>
-    <link rel="stylesheet" href="../assets/css/app.css" />
+    <link rel="stylesheet" href="assets/css/app.css" />
   </head>
   <body>
     <header>
@@ -96,12 +96,12 @@
     </div>
 
     <script type="module">
-      import { initDashboardPage } from "../assets/js/pages/dashboard.js";
+      import { initDashboardPage } from "./assets/js/pages/dashboard.js";
       import {
         showToast,
         ensureToastContainer,
-      } from "../assets/js/utils/toast.js";
-      import { logout } from "../assets/js/services/authService.js";
+      } from "./assets/js/utils/toast.js";
+      import { logout } from "./assets/js/services/authService.js";
 
       ensureToastContainer();
 

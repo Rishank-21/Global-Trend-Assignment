@@ -31,7 +31,7 @@ app.get("/api/config", (req, res) => {
 // Serve frontend static assets
 const clientPath = path.resolve(process.cwd(), "..", "client");
 const assetsPath = path.join(clientPath, "assets");
-const pagesPath = path.join(clientPath, "pages");
+const pagesPath = clientPath;
 
 // Serve static assets (css, js, images, etc.)
 app.use("/assets", express.static(assetsPath));
