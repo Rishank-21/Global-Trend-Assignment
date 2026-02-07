@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import dotenv from "dotenv";
 import { connectDB } from "./config/db.js";
 import cookieParser from "cookie-parser";
@@ -13,6 +14,33 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 connectDB();
+
+// CORS middleware - allow requests from Vercel frontend and localhost
+const allowedOrigins = [
+  "http://localhost:3000",
+  "http://localhost:8080",
+  "http://localhost:5173",
+  "http://127.0.0.1:3000",
+  "http://127.0.0.1:8080",
+  "http://127.0.0.1:5173",
+  "https://global-trend-assignment-sigma.vercel.app",
+  "https://global-trend-assignment.vercel.app",
+];
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  }),
+);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

@@ -5,18 +5,16 @@ let configCache = null;
 export async function getBackendUrl() {
   if (configCache) return configCache;
 
-  try {
-    // Try to fetch from the current domain first (works for same-origin or deployed)
-    const response = await fetch("/api/config");
-    if (response.ok) {
-      const config = await response.json();
-      configCache = config.backendUrl;
-      return configCache;
-    }
-  } catch (error) {
-    console.warn("Could not fetch config from /api/config:", error);
+  // If already on localhost, use it directly (skip config fetch)
+  if (
+    window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1"
+  ) {
+    configCache = `http://${window.location.hostname}:3000`;
+    return configCache;
   }
 
-  // Fallback to localhost for development
-  return "http://localhost:3000";
+  // Use deployed backend URL for production
+  configCache = "https://global-trend-assignment.onrender.com";
+  return configCache;
 }

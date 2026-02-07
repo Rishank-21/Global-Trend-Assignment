@@ -1,12 +1,18 @@
 // API helper functions
 
 export async function postJSON(url, body) {
-  const res = await fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  });
-  return res.json().then((data) => ({ status: res.status, data }));
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    const data = await res.json().catch(() => ({}));
+    return { status: res.status, data };
+  } catch (error) {
+    console.error("Fetch error:", error);
+    throw error;
+  }
 }
 
 export async function fetchWithAuth(path, opts = {}) {
