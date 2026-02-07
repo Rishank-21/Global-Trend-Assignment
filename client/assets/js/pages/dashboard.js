@@ -1,4 +1,4 @@
-// Dashboard page logic
+
 import { getToken } from "../services/authService.js";
 import { logout } from "../services/authService.js";
 import {
@@ -84,7 +84,7 @@ async function loadTasks() {
     renderTasks(res.data);
   } else if (res.status === 401) {
     showToast("Please login", "error");
-    setTimeout(() => (window.location.href = "/login"), 700);
+    setTimeout(() => (window.location.href = "/login.html"), 700);
   } else {
     console.error("Failed to fetch tasks", res);
     showToast("Failed to load tasks", "error");
@@ -95,11 +95,11 @@ export function initDashboardPage() {
   // Check if user is logged in
   if (!getToken()) {
     showToast("Please login to continue", "error");
-    setTimeout(() => (window.location.href = "/login"), 700);
+    setTimeout(() => (window.location.href = "/login.html"), 700);
     return;
   }
 
-  // Task form submission
+ 
   if (taskForm) {
     taskForm.addEventListener("submit", async (e) => {
       e.preventDefault();

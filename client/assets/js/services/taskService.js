@@ -1,11 +1,11 @@
-// Task service
+
 import { getBackendUrl } from "../config.js";
 import { getAuthHeaders } from "../utils/api.js";
 import { getToken } from "./authService.js";
 
 let tasksApiBase = "";
 
-// Initialize backend URL
+
 (async () => {
   tasksApiBase = (await getBackendUrl()) + "/api/tasks";
 })();
@@ -17,7 +17,7 @@ async function api(path, opts) {
 }
 
 export async function fetchTasks() {
-  // Wait for tasksApiBase to initialize
+ 
   while (!tasksApiBase) {
     await new Promise((r) => setTimeout(r, 50));
   }
@@ -29,7 +29,7 @@ export async function fetchTasks() {
 }
 
 export async function createTask(payload) {
-  // Wait for tasksApiBase to initialize
+ 
   while (!tasksApiBase) {
     await new Promise((r) => setTimeout(r, 50));
   }
@@ -42,7 +42,7 @@ export async function createTask(payload) {
 }
 
 export async function updateTask(id, payload) {
-  // Wait for tasksApiBase to initialize
+
   while (!tasksApiBase) {
     await new Promise((r) => setTimeout(r, 50));
   }
@@ -55,7 +55,7 @@ export async function updateTask(id, payload) {
 }
 
 export async function deleteTask(id) {
-  // Wait for tasksApiBase to initialize
+ 
   while (!tasksApiBase) {
     await new Promise((r) => setTimeout(r, 50));
   }

@@ -60,7 +60,7 @@
 
       ensureToastContainer();
 
-      // If user is already logged in, redirect to dashboard
+     
       try {
         if (isAuthPage() && getToken()) {
           showToast("Already logged in", "info");
@@ -70,10 +70,10 @@
         console.log(err);
       }
 
-      // Initialize login page
+      
       initLoginPage();
 
-      // Expose logout globally for other scripts
+      
       window.appAuth = { logout, showToast };
     </script>
   </body>

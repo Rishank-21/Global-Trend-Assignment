@@ -1,4 +1,4 @@
-// Register page logic
+
 import { register } from "../services/authService.js";
 import { saveToken } from "../services/authService.js";
 import { showToast } from "../utils/toast.js";

@@ -1,16 +1,15 @@
-// Authentication service
+
 import { getBackendUrl } from "../config.js";
 import { postJSON } from "../utils/api.js";
 
 let authApiBase = "";
 
-// Initialize backend URL
 (async () => {
   authApiBase = (await getBackendUrl()) + "/api/auth";
 })();
 
 export async function register(payload) {
-  // Wait for authApiBase to initialize
+  
   while (!authApiBase) {
     await new Promise((r) => setTimeout(r, 50));
   }
@@ -18,7 +17,7 @@ export async function register(payload) {
 }
 
 export async function login(payload) {
-  // Wait for authApiBase to initialize
+ 
   while (!authApiBase) {
     await new Promise((r) => setTimeout(r, 50));
   }
@@ -35,9 +34,9 @@ export function getToken() {
 
 export function logout() {
   localStorage.removeItem("token");
-  // call server logout to clear cookie
+ 
   if (authApiBase) {
     fetch(authApiBase + "/logout", { method: "POST" }).catch(() => {});
   }
-  window.location.href = "/login";
+  window.location.href = "/login.html";
 }

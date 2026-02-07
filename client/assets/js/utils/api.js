@@ -1,4 +1,4 @@
-// API helper functions
+
 
 export async function postJSON(url, body) {
   try {

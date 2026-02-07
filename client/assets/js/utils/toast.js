@@ -1,4 +1,4 @@
-// Toast notification utility
+
 function ensureToastContainer() {
   if (document.getElementById("toastContainer")) return;
   const c = document.createElement("div");
